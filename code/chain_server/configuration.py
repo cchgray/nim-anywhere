@@ -94,14 +94,14 @@ class LLMModelConfig(BaseModel):
     name: Annotated[
         str,
         Field(
-            "meta/llama3-8b-instruct",
+            "meta/llama-3.2-1b-instruct",
             description="The name of the model to request.",
         ),
     ]
     url: Annotated[
         HttpUrl,
         Field(
-            "https://integrate.api.nvidia.com/v1",
+            "http://172.17.0.1:8001/v1",
             description="The URL to the model API.",
         ),
     ]
@@ -113,14 +113,14 @@ class RerankingModelConfig(BaseModel):
     name: Annotated[
         str,
         Field(
-            "nv-rerank-qa-mistral-4b:1",
+            "nvidia/llama-3.2-nv-rerankqa-1b-v2",
             description="The name of the model to request.",
         ),
     ]
     url: Annotated[
         HttpUrl,
         Field(
-            "https://integrate.api.nvidia.com/v1",
+            "http://172.17.0.1:8002/v1",
             description="The URL to the model API.",
         ),
     ]
@@ -132,14 +132,14 @@ class EmbeddingModelConfig(BaseModel):
     name: Annotated[
         str,
         Field(
-            "nvidia/nv-embedqa-e5-v5",
+            "nvidia/llama-3.2-nv-embedqa-1b-v2",
             description="The name of the model to request.",
         ),
     ]
     url: Annotated[
         HttpUrl,
         Field(
-            "https://integrate.api.nvidia.com/v1",
+            "http://172.17.0.1:8000/v1",
             description="The URL to the model API.",
         ),
     ]
