@@ -1,3 +1,40 @@
+<<<<<<< HEAD
+=======
+This fork has been reconfigured to run three models on a 4090. To start the servers run these on separate servers. Note that this is for Ubuntu 22.04 and cuda 12.8. Further improvemnts will be to properly configure these docker commands to integrate within the docker compose rather than running locally.
+
+docker login nvcr.io
+
+export LOCAL_NIM_CACHE=~/docker_models/cache/llama-3.2-1b-instruct
+mkdir -p "$LOCAL_NIM_CACHE"
+
+export NGC_API_KEY=***
+
+docker run -it --rm     --gpus all    --privileged     --shm-size=4GB     -e NGC_API_KEY   -e NIM_KVCACHE_PERCENT=0.05     -v "$LOCAL_NIM_CACHE:/opt/nim/.cache"     -u $(id -u)     -p 8001:8000     nvcr.io/nim/meta/llama-3.2-1b-instruct:latest
+
+
+docker login nvcr.io
+
+export LOCAL_NIM_CACHE=~/docker_models/cache/llama-3_2-nv-embedqa-1b-v2
+mkdir -p "$LOCAL_NIM_CACHE"
+
+export NGC_API_KEY=***
+
+docker run -it --rm     --gpus all    --privileged     --shm-size=2GB     -e NGC_API_KEY   -e NIM_KVCACHE_PERCENT=0.02     -v "$LOCAL_NIM_CACHE:/opt/nim/.cache"     -u $(id -u)     -p 8000:8000     nvcr.io/nim/nvidia/llama-3.2-nv-embedqa-1b-v2:latest
+
+
+docker login nvcr.io
+
+export LOCAL_NIM_CACHE=~/docker_models/cache/llama-3_2-nv-rerankqa-1b-v2
+mkdir -p "$LOCAL_NIM_CACHE"
+
+export NGC_API_KEY=***
+
+docker run -it --rm     --gpus all    --privileged     --shm-size=2GB     -e NGC_API_KEY   -e NIM_KVCACHE_PERCENT=0.02     -v "$LOCAL_NIM_CACHE:/opt/nim/.cache"     -u $(id -u)     -p 8002:8000     nvcr.io/nim/nvidia/llama-3.2-nv-rerankqa-1b-v2:latest
+
+
+
+
+>>>>>>> 8ed18c3 (Update README.md)
 # NVIDIA NIM Anywhere [![Clone Me with AI Workbench](https://img.shields.io/badge/Open_In-AI_Workbench-76B900)](https://ngc.nvidia.com/open-ai-workbench/aHR0cHM6Ly9naXRodWIuY29tL05WSURJQS9uaW0tYW55d2hlcmUK)
 
 [![NVIDIA: LLM NIM](https://img.shields.io/badge/NVIDIA-LLM%20NIM-green?logo=nvidia&logoColor=white&color=%2376B900)](https://docs.nvidia.com/nim/#large-language-models)
