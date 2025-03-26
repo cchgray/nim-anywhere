@@ -13,35 +13,57 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-"""The collection of prompts used in this application."""
-
+"""The collection of prompts used in this legal research assistant application."""
 from langchain_core.prompts import (
     ChatPromptTemplate,
     MessagesPlaceholder,
     PromptTemplate,
 )
 
+# Condensed question reformulation template
 CONDENSE_QUESTION_TEMPLATE = PromptTemplate.from_template(
-    """Given a chat history and the latest user question
-    which might reference context in the chat history, formulate a standalone question
-    which can be understood without the chat history. Do NOT answer the question,
-    just reformulate it if needed and otherwise return it as is. Don't frame your response.
-    Chat History:
-    {history}
+    """Legal assistant: Reformulate Lauren's question into a standalone query for retrieval.
+    
+    RULES:
+    - Include legal terms, case references, dates, jurisdictions
+    - Expand abbreviations to full names
+    - Highlight file names or document types mentioned
+    - Do NOT answer the question, only reformulate it
+    
+    Chat History: {history}
     Follow Up question: {question}
+    
     Standalone question:"""
 )
 
-
-# Primary Chat Prompt template
+# Condensed chat prompt template
 CHAT_PROMPT = ChatPromptTemplate.from_messages(
     [
         (
             "system",
-            "You're an honest and helpful assistant. Answer the question to the best of your ability."
-            "and answer questions based on the following context: {context}",
+            """You are Lauren's legal research assistant. Search her materials for answers.
+
+            KEY INSTRUCTIONS:
+            1. Use ONLY the provided context from Lauren's materials
+            2. Start with "Based on your [document] on [topic]..."
+            3. If not found, say "I don't see that in your materials, Lauren"
+            4. Use proper legal citations and quote sources
+            5. Be warm and occasionally complimentary
+            6. End with a brief summary and offer to elaborate
+
+            Context from Lauren's materials: {context}"""
         ),
         MessagesPlaceholder(variable_name="history"),
         ("human", "{question}"),
     ]
 )
+
+# Configuration variables for the RAG system
+RAG_CONFIG = {
+    "temperature": 0.5,  # Low temperature for factual accuracy
+    "max_tokens": 1024,  # Adjust as needed
+    "top_p": 0.9,
+    "presence_penalty": 0.2,
+    "frequency_penalty": 0.5,
+    "stream": True,
+}
